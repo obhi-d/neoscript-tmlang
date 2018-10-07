@@ -1,0 +1,195 @@
+// asd 
+/* asd */
+Command a b;
+{{hlsl:VertexStage-example}}
+// autogen
+// struct VSOutput {
+//  float3 vPosition : Position;
+// #ifdef kVSHasNormal
+//  float3 vNormal : Normal;
+// #endif
+// #ifdef kVSHasTexCoord_0
+//  float3 vTexCoord_0 : TexCoord_0;
+// #endif
+// };
+VSOutput VSMain(in VSInput input) {
+    VSOutput output;
+    output.vPosition = input.vPosition;
+    #ifdef kVSHasNormal
+        output.vNormal = input.vNormal;
+    #endif
+    #ifdef kVSHasTexCoord_0
+        output.vTexCooord_0 = input.vTexCooord_0;
+    #endif
+}
+
+{{hlsl:HullStage-example}}
+// autogen
+// struct HSInput {
+//  float3 vPosition : Position;
+// #ifdef kVSHasNormal
+//  float3 vNormal : Normal;
+// #endif
+// #ifdef kVSHasTexCoord_0
+//  float3 vTexCoord_0 : TexCoord_0;
+// #endif
+// };
+struct HSOutput {
+    float3 vPosition : Position;
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+struct HSConstant {
+    float edges[3] : SV_TessFactor;
+    float inside : SV_InsideTessFactor;
+};
+
+HSConstant OutputPatchConstants(InputPatch<HSInput, 3> iPatch, uint iPatchID : SV_PrimitiveID) {
+    HSConstant output;
+    output.edges[0] = 0.5;
+    output.edges[1] = 0.5;
+    output.edges[2] = 0.5;
+    output.inside = 0.5;
+    return output;
+}
+
+[domain("tri")]
+[partitioning("integer")]
+[outputtopology("triangle_cw")]
+[outputcontrolpoints(3)]
+[patchconstantfunc("OutputPatchConstants")]
+HSOutput OutputControlPoints(InputPatch<HSInput, 3> iPatch, uint iPatchID : SV_PrimitiveID, uint iPointID : SV_OutputControlPointID) {
+    HSOutput output;
+    output.vPosition = iPatch[iPointID].vPosition;
+#ifdef kVSHasNormal 
+    output.vNormal = iPatch[iPointID].vNormal;
+#endif
+#ifdef kVSHasTexCoord_0 
+    output.vTexCoord_0 = iPatch[iPointID].vTexCoord_0;
+#endif
+}
+
+{{hlsl:DomainStage-example}}
+struct DSInput {
+    float3 vPosition : Position;
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+struct DSOutput {
+    float4 vPosition : Position;
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+struct HSConstant {
+    float edges[3] : SV_TessFactor;
+    float inside : SV_InsideTessFactor;
+};
+
+float3 Interpolate3(float3 uvwCoord, float3 iA, float3 iB, float3 iC) {
+    return uvwCoord.x * iA + uvwCoord.y * iB + uvwCoord.z * iC;
+}
+
+[domain("tri")]
+PixelInputType ColorDomainShader(HSConstant input, float3 uvwCoord : SV_DomainLocation, const OutputPatch<DSInput, 3> patch) {    
+    DSOutput output;    
+    output.vPosition = Interpolate3(uvwCoord, patch[0].vPosition, patch[1].vPosition, patch[2].vPosition);
+#ifdef kVSHasNormal
+    output.vNormal = Interpolate3(uvwCoord, patch[0].vNormal, patch[1].vNormal, patch[2].vNormal);
+#endif
+#ifdef kVSHasTexCoord_0
+    output.vTexCoord_0 = Interpolate3(uvwCoord, patch[0].vTexCoord_0, patch[1].vTexCoord_0, patch[2].vTexCoord_0);
+#endif
+    return output;
+}
+{{hlsl:GeometryStage-example}}
+struct GSInput {
+    float4 vPosition : Position;
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+struct GSOutput {
+    float4 vPosition : Position;
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+// Pass through
+[maxvertexcount(3)]
+void OutputGeometryShader( triangle GSInput input[6], inout TriangleStream<GSOutput> oOutputStream ) {   
+    GSOutput output = (GSOutput)0;
+
+    for( uint i=0; i<6; i+=2 ) {
+        output.vPosition = input[i].vPosition;
+#ifdef kVSHasNormal        
+        output.vNormal = input[i].vNormal;       
+#endif
+#ifdef kVSHasTexCoord_0
+        output.vTexCoord_0 = input[i].vTexCoord_0;
+#endif        
+        oOutputStream.Append( output );
+    }
+    
+    oOutputStream.RestartStrip();
+}
+
+{{hlsl:FragmentStage-example}}
+//struct FSOutput {
+// float4 vFinalColor;
+//};
+
+struct FSInput {
+#ifdef kVSHasNormal
+    float3 vNormal : Normal;
+#endif
+#ifdef kVSHasTexCoord_0
+    float3 vTexCoord_0 : TexCoord_0;
+#endif
+};
+
+FSOutput OutputFragment(FSInput input) {
+    FSOutput output;
+    output.vFinalColor = input.vNormal * input.vTexCoord_0;
+    return output;
+}
+
+{{code:ShaderPipeline}}
+Text a;
+
+ShaderPipeline Example (lang = HLSL) {
+    
+    Tags "ForwardPipeline";
+
+    VertexInterface {
+        float3 Position [inout, internal] (location = 0);
+        float3 Normal [optional, inout];
+        float3 TexCoord_0 [optional, inout];
+    }
+
+    FragmentInterface {
+        float4 FinalColor;
+    }
+}

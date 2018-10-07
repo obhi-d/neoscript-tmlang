@@ -1,0 +1,37 @@
+{
+    "name": "neoscript",
+    "displayName": "NeoScript",
+    "description": "Neoscript markup.",
+    "version": "0.0.1",
+    "publisher": "obhi",
+    "engines": {
+        "vscode": "^1.27.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "neoscript",
+            "aliases": ["NeoScript", "neoscript"],
+            "extensions": [".neoscript"],
+            "configuration": "./language-configuration.json"
+        },
+        {
+            "id": "sfx",
+            "aliases": ["SFX", "sfx"],
+            "extensions": [".sfx"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "neoscript",
+            "scopeName": "source.neoscript",
+            "path": "./syntaxes/neoscript.tmLanguage.json"
+        },
+        {
+            "language": "sfx",
+            "scopeName": "source.sfx",
+            "path": "./syntaxes/sfx.tmLanguage.json"
+        }]
+    }
+}

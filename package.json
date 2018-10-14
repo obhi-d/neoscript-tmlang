@@ -11,27 +11,41 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "neoscript",
-            "aliases": ["NeoScript", "neoscript"],
-            "extensions": [".neoscript"],
-            "configuration": "./language-configuration.json"
-        },
-        {
-            "id": "sfx",
-            "aliases": ["SFX", "sfx"],
-            "extensions": [".sfx"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "neoscript",
-            "scopeName": "source.neoscript",
-            "path": "./syntaxes/neoscript.tmLanguage.json"
-        },
-        {
-            "language": "sfx",
-            "scopeName": "source.sfx",
-            "path": "./syntaxes/sfx.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "neoscript",
+                "aliases": [
+                    "NeoScript",
+                    "neoscript"
+                ],
+                "extensions": [
+                    ".neoscript"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "sfx",
+                "aliases": [
+                    "SFX",
+                    "sfx"
+                ],
+                "extensions": [
+                    ".sfx"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "neoscript",
+                "scopeName": "source.neoscript",
+                "path": "./syntaxes/neoscript.tmLanguage.json"
+            },
+            {
+                "language": "sfx",
+                "scopeName": "source.sfx",
+                "path": "./syntaxes/sfx.tmLanguage.json"
+            }
+        ]
     }
 }

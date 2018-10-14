@@ -177,7 +177,7 @@
 		"textRegion" : {
             "name": "markup.text.neoscript",
             "begin": "(^\\{\\{)?\\s*(text):([^\\}]*)\\}\\}",
-            "end": "^\\{\\{",
+            "end": "(?=^\\{\\{)",
             "beginCaptures": {
                 "2": {
                     "name": "keyword.control.neoscript"
@@ -187,16 +187,12 @@
                 }
             },
             "patterns": [
-                {
-                    "name": "constant.character.escape.neoscript",
-                    "match": "\\."
-                }
             ]
         },
         "codeRegion": {
             "name": "markup.code.neoscript",
             "begin": "(^\\{\\{)?\\s*(code):([^\\}]*)\\}\\}",
-            "end": "^\\{\\{",
+            "end": "(?=^\\{\\{)",
             "beginCaptures": {
                 "2": {
                     "name": "keyword.control.neoscript"

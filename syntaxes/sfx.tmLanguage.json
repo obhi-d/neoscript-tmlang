@@ -5,15 +5,15 @@
     "fileTypes": [ ".sfx" ],
     "repository": {
         "hlslRegion" : {
-            "name": "markup.hlsl.neoscript",
-            "begin": "(^\\{\\{)?\\s*(hlsl):([\\w\\W]*)\\}\\}",
-            "end": "^\\{\\{",
+            "name": "markup.hlsl.sfx",
+            "begin": "^\\{\\{?\\s*(hlsl):([\\w\\W]*)\\}\\}",
+            "end": "(?=^\\{\\{)",
             "beginCaptures": {
-                "2": {
-                    "name": "keyword.control.neoscript"
+                "1": {
+                    "name": "keyword.control.sfx"
                 },
-                "3":{
-                    "name": "entity.name.section.neoscript"
+                "2":{
+                    "name": "entity.name.section.sfx"
                 }
             },
             "patterns": [
@@ -25,13 +25,13 @@
         "glslRegion" : {
             "name": "markup.glsl.neoscript",
             "begin": "(^\\{\\{)?\\s*(glsl):([\\w\\W]*)\\}\\}",
-            "end": "^\\{\\{",
+            "end": "(?=^\\{\\{)",
             "beginCaptures": {
                 "2": {
-                    "name": "keyword.control.neoscript"
+                    "name": "keyword.control.sfx"
                 },
                 "3":{
-                    "name": "entity.name.section.neoscript"
+                    "name": "entity.name.section.sfx"
                 }
             },
             "patterns": [
@@ -42,9 +42,9 @@
         }
     },
     "patterns":[
-        {"include": "source.neoscript"},
         {"include": "#hlslRegion"},
-        {"include": "#glslRegion"}
+        {"include": "#glslRegion"},
+        {"include": "source.neoscript"}
     ]
 }
 

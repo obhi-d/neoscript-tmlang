@@ -1,3 +1,3 @@
-# neoscript README
+# Visual Studio Code for Language Highlights
 
-Use `vsce pacakge` to package.
+Use `vsce pacakge` to build a vsix extension.

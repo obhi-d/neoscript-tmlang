@@ -113,7 +113,7 @@ PixelInputType ColorDomainShader(HSConstant input, float3 uvwCoord : SV_DomainLo
 #endif
     return output;
 }
-{{text:GeometryStage-example}}
+-- text:GeometryStage-example --
 struct GSInput {
     float4 vPosition : Position;
 #ifdef kVSHasNormal
@@ -153,7 +153,7 @@ void OutputGeometryShader( triangle GSInput input[6], inout TriangleStream<GSOut
     oOutputStream.RestartStrip();
 }
 
-{{text:FragmentStage-example}}
+-- text:FragmentStage example --
 //struct FSOutput {
 // float4 vFinalColor;
 //};

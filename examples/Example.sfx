@@ -1,7 +1,7 @@
 // asd 
 /* asd */
 Command a b;
-{{hlsl:VertexStage-example}}
+-- hlsl:VertexStage-example --
 // autogen
 // struct VSOutput {
 //  float3 vPosition : Position;
@@ -23,7 +23,7 @@ VSOutput VSMain(in VSInput input) {
     #endif
 }
 
-{{hlsl:HullStage-example}}
+-- hlsl:HullStage-example --
 // autogen
 // struct HSInput {
 //  float3 vPosition : Position;
@@ -116,7 +116,8 @@ PixelInputType ColorDomainShader(HSConstant input, float3 uvwCoord : SV_DomainLo
 #endif
     return output;
 }
-{{hlsl:GeometryStage-example}}
+
+-- hlsl:GeometryStage-example --
 struct GSInput {
     float4 vPosition : Position;
 #ifdef kVSHasNormal
@@ -156,7 +157,7 @@ void OutputGeometryShader( triangle GSInput input[6], inout TriangleStream<GSOut
     oOutputStream.RestartStrip();
 }
 
-{{hlsl:FragmentStage-example}}
+-- hlsl:FragmentStage-example --
 //struct FSOutput {
 // float4 vFinalColor;
 //};
@@ -176,7 +177,7 @@ FSOutput OutputFragment(FSInput input) {
     return output;
 }
 
-{{code:ShaderPipeline}}
+-- code:ShaderPipeline --
 Text a;
 
 ShaderPipeline Example (lang = HLSL) {

@@ -1,4 +1,4 @@
-{{text:VertexStage-example}}
+-- text: VertexStage example --
 // autogen
 // struct VSOutput {
 //  float3 vPosition : Position;
@@ -20,7 +20,7 @@ VSOutput VSMain(in VSInput input) {
     #endif
 }
 
-{{text:HullStage-example}}
+-- text: HullStage example -- 
 // autogen
 // struct HSInput {
 //  float3 vPosition : Position;
@@ -71,7 +71,7 @@ HSOutput OutputControlPoints(InputPatch<HSInput, 3> iPatch, uint iPatchID : SV_P
 #endif
 }
 
-{{text:DomainStage-example}}
+-- text:DomainStage example -- 
 struct DSInput {
     float3 vPosition : Position;
 #ifdef kVSHasNormal
@@ -173,7 +173,7 @@ FSOutput OutputFragment(FSInput input) {
     return output;
 }
 
-{{code:ShaderPipeline}}
+--  code:ShaderPipeline -- 
 // Comment
 /* Comment */
 ShaderPipeline Example (lang = text) {

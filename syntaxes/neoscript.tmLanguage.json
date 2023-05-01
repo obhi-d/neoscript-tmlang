@@ -3,7 +3,8 @@
 	"scopeName": "source.neoscript",
 	"name": "NeoScript",
 	"fileTypes": [
-		".neoscript"
+		".neoscript",
+		".ns"
 	],
 	"foldingStartMarker": "\\{\\s*$",
 	"foldingStopMarker": "^\\s*\\}",
@@ -237,7 +238,7 @@
 		},
 		"textRegion": {
 			"name": "markup.text.neoscript",
-			"begin": "(^\\{\\{)?\\s*(text):([^\\}]*)\\}\\}",
+			"begin": "(^--)?\\s*([a-zA-Z#_$\\.]+):([^\\-]*)--",
 			"end": "^\\{\\{",
 			"beginCaptures": {
 				"2": {
@@ -256,7 +257,7 @@
 		},
 		"codeRegion": {
 			"name": "markup.code.neoscript",
-			"begin": "(^\\{\\{)?\\s*(code):([^\\}]*)\\}\\}",
+			"begin": "(^--)?\\s*(code):([^\\-]*)--",
 			"end": "^\\{\\{",
 			"beginCaptures": {
 				"2": {
